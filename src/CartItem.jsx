@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
+import ProductList from './ProductList';
 
 const CartItem = ({ onContinueShopping }) => {
+  const [showProductList, setShowProductList] = useState(false);
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
@@ -18,8 +20,12 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleContinueShopping = (e) => {
-    alert('Functionality to be added for future reference');
+    setShowProductList(true);
   };
+
+  const handleCheckout = (e) => {
+    alert('Coming Soon');
+  }
 
   const handleIncrement = (item) => {
     dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
@@ -64,7 +70,10 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={(e) => handleCheckout(e)}>Checkout</button>
+      </div>
+      <div className={`product-list-container ${showProductList ? 'visible' : ''}`}>
+        <ProductList />
       </div>
     </div>
   );
